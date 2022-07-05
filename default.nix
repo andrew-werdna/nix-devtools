@@ -10,7 +10,10 @@ in
 {
 
   inherit (shells)
+    system
+    devtools
     golang
+    complete
     ;
 
 }

@@ -4,18 +4,14 @@ let
   systemSet = {
     inherit (pkgs)
       # coreutils-full git
-      niv nixpkgs-fmt
-      htop
+      niv nixpkgs-fmt htop neofetch
       ;
   };
 
   devtoolsSet = {
     inherit (pkgs)
       # vim
-      docker
-      docker-compose
-      kubernetes
-      minikube
+      docker docker-compose kubernetes minikube k9s
       ;
   };
 
@@ -25,18 +21,17 @@ let
       ;
   };
 
-  inherit (pkgs)
-    mkShell
-    ;
+  systemList = builtins.attrValues systemSet;
+  devtoolsList = builtins.attrValues devtoolsSet;
+  golangList = builtins.attrValues golangSet;
+
+  inherit (pkgs) mkShell;
 
 in
-{
+rec {
 
-  golang = mkShell {
-    buildInputs =
-      (builtins.attrValues systemSet) ++
-      (builtins.attrValues devtoolsSet) ++
-      (builtins.attrValues golangSet);
+  system = mkShell {
+    buildInputs = systemList;
 
     shellHook = ''
       cd $NIV_ROOT
@@ -45,6 +40,24 @@ in
     '';
 
     NIV_ROOT = builtins.toString ./.;
+  };
+
+  devtools = mkShell {
+    buildInputs = devtoolsList;
+
+    inherit (system) shellHook NIV_ROOT;
+  };
+
+  golang = mkShell {
+    buildInputs = golangList;
+
+    inherit (system) shellHook NIV_ROOT;
+  };
+
+  complete = mkShell {
+    buildInputs = systemList ++ devtoolsList ++ golangList;
+
+    inherit (system) shellHook NIV_ROOT;
   };
 
 }
