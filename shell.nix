@@ -1,38 +1,50 @@
 { pkgs ? (import ./nix/sources.nix).nixpkgs }:
 let
-    inherit (pkgs) 
-        mkShell
-        coreutils
-        go_1_18
-        niv
-        git
-        vim
-        htop
-        docker
-        docker-compose
-        kubernetes
-        minikube
-        ;
+
+  systemSet = {
+    inherit (pkgs)
+      # coreutils-full git
+      niv nixpkgs-fmt
+      htop
+      ;
+  };
+
+  devtoolsSet = {
+    inherit (pkgs)
+      # vim
+      docker
+      docker-compose
+      kubernetes
+      minikube
+      ;
+  };
+
+  golangSet = {
+    inherit (pkgs)
+      go_1_18 delve
+      ;
+  };
+
+  inherit (pkgs)
+    mkShell
+    ;
+
 in
-    mkShell {
-        buildInputs = [
-            coreutils
-            go_1_18
-            niv
-            git
-            vim
-            htop
-            docker
-            docker-compose
-            kubernetes
-            minikube
-        ];
+{
 
-        shellHook = ''
-            cd $NIV_ROOT
-            niv update nixpkgs
-            cd -
-        '';
+  golang = mkShell {
+    buildInputs =
+      (builtins.attrValues systemSet) ++
+      (builtins.attrValues devtoolsSet) ++
+      (builtins.attrValues golangSet);
 
-        NIV_ROOT = builtins.toString ./.;
-    }
+    shellHook = ''
+      cd $NIV_ROOT
+      niv update nixpkgs
+      cd -
+    '';
+
+    NIV_ROOT = builtins.toString ./.;
+  };
+
+}
