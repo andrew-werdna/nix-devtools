@@ -3,7 +3,7 @@ let
 
   systemSet = {
     inherit (pkgs)
-      # coreutils-full git
+      # coreutils-full git zsh oh-my-zsh
       niv nixpkgs-fmt htop neofetch
       ;
   };
@@ -12,12 +12,14 @@ let
     inherit (pkgs)
       # vim
       docker docker-compose kubernetes minikube k9s
+      jq dnsmasq sqlite-interactive# or just sqlite?
+      nmap netcat dig inetutils# ngrok
       ;
   };
 
   golangSet = {
     inherit (pkgs)
-      go_1_18 delve
+      go_1_18 delve fx
       ;
   };
 
