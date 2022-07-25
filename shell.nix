@@ -4,7 +4,7 @@ let
   systemSet = {
     inherit (pkgs)
       # coreutils-full git zsh oh-my-zsh
-      niv nixpkgs-fmt htop neofetch
+      ansible asdf-vm niv nixpkgs-fmt htop neofetch
       ;
   };
 
