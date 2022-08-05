@@ -6,14 +6,30 @@ let
     inherit pkgs;
   };
 
+  packages = import ./basics.nix {
+    inherit pkgs;
+  };
+
+  go = packages.languages.go;
+  zig = packages.languages.zig;
+
 in
 {
 
   inherit (shells)
-    system
-    devtools
-    golang
-    complete
+    systemShell
+    devtoolsShell
+    golangShell
+    completeShell
+    testShell
     ;
+
+  inherit (packages)
+    systemList
+    appList
+    ;
+
+  inherit go zig;
+
 
 }
