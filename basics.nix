@@ -7,7 +7,7 @@ let
     jq dnsmasq sqlite-interactive nmap
     socat dig inetutils go_1_18 delve fx
     mtr revive newman postman shellcheck
-    coreutils-full ranger
+    coreutils-full ranger vscode
     shadow e2fsprogs zig beekeper-studio
     ;
 
@@ -37,6 +37,7 @@ let
     postman
     newman
     beekeper-studio
+    vscode
   ];
 
   languages = {
