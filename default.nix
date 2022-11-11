@@ -10,7 +10,6 @@ let
     inherit pkgs;
   };
 
-  go = packages.languages.go;
   zig = packages.languages.zig;
 
 in
@@ -19,9 +18,7 @@ in
   inherit (shells)
     systemShell
     devtoolsShell
-    golangShell
     completeShell
-    testShell
     ;
 
   inherit (packages)
@@ -29,7 +26,7 @@ in
     appList
     ;
 
-  inherit go zig;
+  inherit zig;
 
 
 }

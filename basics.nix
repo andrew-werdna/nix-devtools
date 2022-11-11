@@ -5,7 +5,7 @@ let
     ansible asdf-vm niv nixpkgs-fmt
     htop neofetch docker docker-compose
     jq dnsmasq sqlite-interactive nmap
-    socat dig inetutils go_1_18 delve fx
+    socat dig inetutils fx gcc_latest
     mtr revive newman postman shellcheck
     coreutils-full ranger vscode
     shadow e2fsprogs zig beekeper-studio
@@ -31,6 +31,7 @@ let
     shellcheck
     coreutils-full
     ranger
+    gcc_latest
   ];
 
   appList = [
@@ -42,13 +43,8 @@ let
 
   languages = {
     inherit zig;
-    go = [
-      go_1_18
-      delve
-      fx
-      revive
-    ];
   };
+
 
 in
 {
